@@ -11,6 +11,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      # Монтируем файл миграции без буквы 's' в user
+      - ./migrations/000001_create_user_table.up.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
 
   # Сервис нашего Go-приложения
