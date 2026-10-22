@@ -18,9 +18,10 @@ FROM alpine:latest
 
 WORKDIR /app
 
-# Копируем скомпилированный бинарник и шаблоны
+# Копируем скомпилированный бинарник, шаблоны И ПАПКУ С МИГРАЦИЯМИ
 COPY --from=builder /app/server .
 COPY --from=builder /app/web ./web
+COPY --from=builder /app/migrations ./migrations
 
 EXPOSE 8080
 

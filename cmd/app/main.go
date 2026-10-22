@@ -24,10 +24,17 @@ func main() {
 	}
 
 	// 2. Подключаемся к базе данных
+	// 2. Подключаемся к базе данных
 	database, err := db.ConnectDB(connStr)
 	if err != nil {
 		log.Fatalf("Не удалось подключиться к базе данных: %v", err)
 	}
+
+	// ЗАПУСКАЕМ МИГРАЦИИ АВТОМАТИЧЕСКИ ПРИ СТАРТЕ
+	if err := db.RunMigrations(database, "mydb"); err != nil {
+		log.Fatalf("Ошибка применения миграций: %v", err)
+	}
+
 	defer func(database *sql.DB) {
 		err := database.Close()
 		if err != nil {
